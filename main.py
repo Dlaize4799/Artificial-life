@@ -1,12 +1,10 @@
 import pygame
+from environment import Environment
+from config import WIDTH, HEIGHT, COLUMNS, ROWS, CELL_SIZE
+
+environment = Environment()
 
 pygame.init()
-
-WIDTH = 900
-HEIGHT = 600
-COLUMNS = 60
-ROWS = 40
-CELL_SIZE = 15
 
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Artificial Life')
@@ -14,15 +12,6 @@ pygame.display.set_caption('Artificial Life')
 clock = pygame.time.Clock()
 
 running = True
-
-# ROWS counts the number of rows present and hence how deep we can go (y-coordinate)
-# This may seem counter-intuitive ROWS associated with y? but remember it is number of rows:)
-world = [   [0 for y in range(ROWS)] # Inner list represent a column
-        for x in range(COLUMNS)    ]
-
-for x in range(10, 20):
-    for y in range(10, 20):
-        world[x][y] = 3
 
 while running:
 
@@ -36,14 +25,14 @@ while running:
     for x in range(COLUMNS):
             for y in range(ROWS):
     
-                food = world[x][y]
+                food_ = environment.food[x][y]
     
-                if food > 0:
+                if food_ > 0:
     
                     pixel_x = x * CELL_SIZE
                     pixel_y = y * CELL_SIZE
     
-                    green = 40 + food * 35
+                    green = 40 + food_ * 35
                     color = (20, green, 30)
     
                     pygame.draw.rect(screen, color, (pixel_x, pixel_y, 15, 15))
